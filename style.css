@@ -62,7 +62,7 @@ a:hover {
 
 /* Link row */
 .links {
-  margin: 0 0 56px;
+  margin: 0 0 32px;
   padding: 0;
   list-style: none;
   display: flex;
@@ -70,6 +70,23 @@ a:hover {
   flex-wrap: wrap;
   font-size: 14px;
   color: var(--ink-soft);
+}
+
+/* Icon links */
+.links.icons a {
+  display: inline-flex;
+  color: var(--ink-soft);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.links.icons a:hover {
+  color: var(--ink);
+}
+
+.links.icons svg {
+  width: 20px;
+  height: 20px;
 }
 
 /* Section labels: "2026", ... */
