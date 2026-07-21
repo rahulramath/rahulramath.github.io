@@ -1,0 +1,126 @@
+/* Dead simple. One font, two colors, paper background. */
+
+:root {
+  --paper: #fbf6ec;
+  --ink: #241f1a;
+  --ink-soft: #8a8175;
+  --accent: #326e4e;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--paper);
+}
+
+body {
+  margin: 0 auto;
+  padding: 72px 24px 96px;
+  max-width: 640px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--ink);
+}
+
+h1 {
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 0 0 4px;
+}
+
+.tagline {
+  color: var(--ink-soft);
+  margin: 0 0 40px;
+  font-style: italic;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(50, 110, 78, 0.3);
+}
+
+a:hover {
+  border-bottom-color: var(--accent);
+}
+
+/* Top nav links on the main page */
+.links {
+  margin: 0 0 56px;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  font-size: 15px;
+}
+
+/* Section labels: "currently", "2026", ... */
+.section-label {
+  font-style: italic;
+  color: var(--ink-soft);
+  font-size: 15px;
+  margin: 48px 0 12px;
+}
+
+.section-label:first-of-type {
+  margin-top: 0;
+}
+
+ul.plain {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+ul.plain li {
+  margin: 0 0 10px;
+}
+
+/* Project rows on side-experiments */
+.project {
+  margin: 0 0 14px;
+}
+
+.project .desc {
+  color: var(--ink-soft);
+}
+
+/* Portrait */
+.portrait {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  margin: 0 0 28px;
+  display: block;
+  object-fit: cover;
+}
+
+.portrait-fallback {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  margin: 0 0 28px;
+  background: var(--accent);
+  color: var(--paper);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+}
+
+.back {
+  font-size: 15px;
+  margin-bottom: 40px;
+  display: inline-block;
+}
+
+footer {
+  margin-top: 72px;
+  font-size: 14px;
+  color: var(--ink-soft);
+}
