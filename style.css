@@ -110,6 +110,25 @@ ul.plain {
 
 ul.plain li {
   margin: 0 0 10px;
+  color: var(--ink-soft);
+}
+
+/* Links inside history lines stay subtle: same gray, underline only */
+ul.plain a {
+  color: inherit;
+}
+
+ul.plain a:hover {
+  color: var(--ink);
+}
+
+/* Year ranges: even quieter, smaller, tucked at the end of a line */
+.when {
+  font-size: 13px;
+  color: var(--ink-soft);
+  opacity: 0.65;
+  margin-left: 6px;
+  white-space: nowrap;
 }
 
 /* Project rows: bold ink name, quiet gray description, one line */
