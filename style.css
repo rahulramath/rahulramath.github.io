@@ -27,8 +27,7 @@ body {
 
 @media (min-width: 700px) {
   body {
-    /* wide gutter so the margin arrow has room to swing */
-    padding-left: 108px;
+    padding-left: 72px;
   }
 }
 
@@ -70,9 +69,21 @@ h1 {
 .side-line::before {
   content: "";
   display: block;
-  width: 72px;
-  border-top: 1px solid rgba(29, 29, 27, 0.12);
+  width: 180px;
+  border-top: 1px solid rgba(29, 29, 27, 0.08);
   margin-bottom: 14px;
+}
+
+/* Divider between the intro block and history */
+hr.rule {
+  border: 0;
+  border-top: 1px solid rgba(29, 29, 27, 0.08);
+  width: 180px;
+  margin: 44px 0 12px;
+}
+
+hr.rule + .section-label {
+  margin-top: 0;
 }
 
 .side-line a {
@@ -147,31 +158,11 @@ a:hover {
 
 /* Section labels: "2026", ... */
 .section-label {
-  position: relative;
   color: var(--ink-soft);
   font-size: 13px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   margin: 44px 0 12px;
-}
-
-/* Casual hand-drawn arrow in the left gutter, pointing at "previously" */
-.sketch-arrow {
-  display: none;
-  position: absolute;
-  left: -86px;
-  bottom: -6px;
-  width: 72px;
-  height: 244px;
-  color: var(--ink-soft);
-  opacity: 0.55;
-  pointer-events: none;
-}
-
-@media (min-width: 700px) {
-  .sketch-arrow {
-    display: block;
-  }
 }
 
 .section-label:first-of-type {
