@@ -9,7 +9,7 @@
 
   var ctx = canvas.getContext("2d");
   var INK = "#1d1d1b";
-  var GRID = 78; // dots per side
+  var GRID = 48; // dots per side
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   var img = new Image();
@@ -106,7 +106,7 @@
     }
   }
 
-  var FORCE_RADIUS = 64;
+  var FORCE_RADIUS = 34;
 
   function step() {
     var settled = true;
