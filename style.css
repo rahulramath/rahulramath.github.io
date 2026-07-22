@@ -57,6 +57,20 @@ h1 {
   color: var(--ink);
 }
 
+/* Side experiments: its own quiet line, set off by a short hairline */
+.side-link {
+  margin: -12px 0 44px;
+  font-size: 15px;
+}
+
+.side-link::before {
+  content: "";
+  display: block;
+  width: 28px;
+  border-top: 1px solid rgba(29, 29, 27, 0.25);
+  margin-bottom: 14px;
+}
+
 a {
   color: var(--ink);
   text-decoration: underline;
