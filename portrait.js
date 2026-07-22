@@ -9,7 +9,7 @@
 
   var ctx = canvas.getContext("2d");
   var INK = "#1d1d1b";
-  var GRID = 48; // dots per side
+  var GRID = 60; // dots per side
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   var img = new Image();
@@ -81,8 +81,8 @@
       var dx = p.x - bx;
       var dy = p.y - by;
       var d = Math.sqrt(dx * dx + dy * dy) || 1;
-      if (d < size * 0.4) {
-        var f = (1 - d / (size * 0.4)) * 14;
+      if (d < size * 0.3) {
+        var f = (1 - d / (size * 0.3)) * 6;
         p.vx += (dx / d) * f;
         p.vy += (dy / d) * f;
       }
@@ -106,7 +106,7 @@
     }
   }
 
-  var FORCE_RADIUS = 34;
+  var FORCE_RADIUS = 16;
 
   function step() {
     var settled = true;
@@ -117,7 +117,7 @@
       var d2 = dx * dx + dy * dy;
       if (d2 < FORCE_RADIUS * FORCE_RADIUS) {
         var d = Math.sqrt(d2) || 1;
-        var f = (1 - d / FORCE_RADIUS) * 3.2;
+        var f = (1 - d / FORCE_RADIUS) * 1.6;
         p.vx += (dx / d) * f;
         p.vy += (dy / d) * f;
       }
