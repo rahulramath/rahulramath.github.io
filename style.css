@@ -46,7 +46,7 @@ h1 {
 
 .tagline {
   color: var(--ink-soft);
-  margin: 0 0 36px;
+  margin: 0 0 20px;
 }
 
 .tagline a {
@@ -57,18 +57,23 @@ h1 {
   color: var(--ink);
 }
 
-/* Side experiments: its own quiet line, set off by a short hairline */
-.side-link {
-  margin: -12px 0 44px;
-  font-size: 15px;
+/* "On the side" sentence + link live together, set off by a short hairline */
+.side-line {
+  color: var(--ink-soft);
+  margin: 0 0 44px;
+  max-width: 620px;
 }
 
-.side-link::before {
+.side-line::before {
   content: "";
   display: block;
   width: 28px;
   border-top: 1px solid rgba(29, 29, 27, 0.25);
   margin-bottom: 14px;
+}
+
+.side-line a {
+  color: var(--ink);
 }
 
 a {
