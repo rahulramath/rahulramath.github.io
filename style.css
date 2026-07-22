@@ -161,6 +161,7 @@ ul.plain {
 ul.plain li {
   margin: 0 0 10px;
   color: var(--ink-soft);
+  font-size: 15px;
 }
 
 /* Links inside history lines stay subtle: same gray, underline only */
