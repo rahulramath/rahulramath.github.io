@@ -38,6 +38,34 @@ h1 {
   margin: 0 0 6px;
 }
 
+/* Intro text on the left, halftone portrait on the right */
+.hero {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.hero-text {
+  min-width: 280px;
+}
+
+#portrait {
+  width: 240px;
+  height: 240px;
+  flex-shrink: 0;
+  touch-action: none;
+}
+
+@media (max-width: 640px) {
+  #portrait {
+    width: 200px;
+    height: 200px;
+    order: -1; /* portrait above the intro on small screens */
+  }
+}
+
 .tagline {
   color: var(--ink-soft);
   margin: 0 0 20px;
