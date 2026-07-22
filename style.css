@@ -158,10 +158,10 @@ a:hover {
 .sketch-arrow {
   display: none;
   position: absolute;
-  left: -58px;
-  bottom: -6px;
-  width: 48px;
-  height: 250px;
+  left: -54px;
+  bottom: -8px;
+  width: 44px;
+  height: 66px;
   color: var(--ink-soft);
   opacity: 0.55;
   pointer-events: none;
