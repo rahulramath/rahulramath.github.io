@@ -27,7 +27,8 @@ body {
 
 @media (min-width: 700px) {
   body {
-    padding-left: 72px;
+    /* wide gutter so the margin arrow has room to swing */
+    padding-left: 108px;
   }
 }
 
@@ -158,10 +159,10 @@ a:hover {
 .sketch-arrow {
   display: none;
   position: absolute;
-  left: -50px;
+  left: -86px;
   bottom: -6px;
-  width: 36px;
-  height: 63px;
+  width: 72px;
+  height: 244px;
   color: var(--ink-soft);
   opacity: 0.55;
   pointer-events: none;
