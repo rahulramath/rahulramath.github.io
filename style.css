@@ -146,11 +146,32 @@ a:hover {
 
 /* Section labels: "2026", ... */
 .section-label {
+  position: relative;
   color: var(--ink-soft);
   font-size: 13px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   margin: 44px 0 12px;
+}
+
+/* Casual hand-drawn arrow in the left gutter, pointing at "previously" */
+.sketch-arrow {
+  display: none;
+  position: absolute;
+  left: -54px;
+  bottom: -4px;
+  width: 40px;
+  height: 212px;
+  color: var(--ink-soft);
+  opacity: 0.55;
+  transform: rotate(-3deg);
+  pointer-events: none;
+}
+
+@media (min-width: 700px) {
+  .sketch-arrow {
+    display: block;
+  }
 }
 
 .section-label:first-of-type {
