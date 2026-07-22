@@ -17,18 +17,12 @@ html {
 body {
   margin: 0;
   padding: 88px 24px 96px;
-  max-width: 900px;
+  max-width: 1160px;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     "Helvetica Neue", Arial, sans-serif;
   font-size: 16px;
   line-height: 1.65;
   color: var(--ink);
-}
-
-/* Prose (intro text) stays narrow for readability; lists can go wide. */
-.tagline,
-h1 {
-  max-width: 620px;
 }
 
 @media (min-width: 700px) {
@@ -57,23 +51,23 @@ h1 {
   color: var(--ink);
 }
 
-/* "On the side" sentence + link live together, set off by a short hairline */
+/* "On the side" sentence + link live together, set off by a hairline */
 .side-line {
   color: var(--ink-soft);
   margin: 0 0 44px;
-  max-width: 620px;
 }
 
 .side-line::before {
   content: "";
   display: block;
-  width: 28px;
-  border-top: 1px solid rgba(29, 29, 27, 0.25);
+  width: 72px;
+  border-top: 1px solid rgba(29, 29, 27, 0.12);
   margin-bottom: 14px;
 }
 
 .side-line a {
   color: var(--ink);
+  white-space: nowrap;
 }
 
 a {
