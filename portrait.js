@@ -2,6 +2,12 @@
  * Halftone portrait: the photo is rebuilt as a grid of ink dots on the paper
  * background. Dots near the pointer are pushed away and spring back, so the
  * portrait behaves like a small force field rather than a static image.
+ *
+ * Light mode: dark dots, sized by how dark the photo is (classic halftone).
+ * Dark mode: light dots, sized by how BRIGHT the photo is (chalk on
+ * blackboard), so the face still looks like the face instead of a negative.
+ * The photo's backdrop is removed with a flood fill from the edges so it
+ * never renders in either mode.
  */
 (function () {
   var canvas = document.getElementById("portrait");
@@ -11,19 +17,17 @@
   var GRID = 60; // dots per side
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  // Dots take the page's current ink color, so dark mode renders the portrait
-  // as light dots on dark paper (same geometry, inverted print).
   var ink = "#1d1d1b";
   function refreshInk() {
     ink = getComputedStyle(document.body).color || ink;
   }
   refreshInk();
-  var darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
-  if (darkQuery.addEventListener) {
-    darkQuery.addEventListener("change", function () {
-      refreshInk();
-      draw();
-    });
+
+  function darkMode() {
+    var t = document.documentElement.getAttribute("data-theme");
+    if (t === "dark") return true;
+    if (t === "light") return false;
+    return window.matchMedia("(prefers-color-scheme: dark)").matches;
   }
 
   var img = new Image();
@@ -31,7 +35,10 @@
   img.onload = setup;
 
   var particles = [];
+  var lumGrid = null; // luminance per cell
+  var bgMask = null; // true = photo backdrop, never draw
   var size = 0; // CSS pixels, square
+  var cell = 0;
   var dpr = Math.min(window.devicePixelRatio || 1, 2);
   var pointer = { x: -9999, y: -9999 };
   var running = false;
@@ -41,6 +48,7 @@
     canvas.width = size * dpr;
     canvas.height = size * dpr;
     ctx.scale(dpr, dpr);
+    cell = size / GRID;
 
     // Sample the photo at GRID x GRID
     var off = document.createElement("canvas");
@@ -52,22 +60,28 @@
     octx.drawImage(img, (img.width - s) / 2, (img.height - s) / 2, s, s, 0, 0, GRID, GRID);
     var data = octx.getImageData(0, 0, GRID, GRID).data;
 
-    var cell = size / GRID;
-    for (var gy = 0; gy < GRID; gy++) {
-      for (var gx = 0; gx < GRID; gx++) {
-        var i = (gy * GRID + gx) * 4;
-        var lum = (0.2126 * data[i] + 0.7152 * data[i + 1] + 0.0722 * data[i + 2]) / 255;
-        // Light pixels dissolve into the paper: no dot at all
-        if (lum > 0.82) continue;
-        var r = cell * 0.62 * Math.pow(1 - lum, 0.85);
-        if (r < 0.25) continue;
-        var x = (gx + 0.5) * cell;
-        var y = (gy + 0.5) * cell;
-        particles.push({ hx: x, hy: y, x: x, y: y, vx: 0, vy: 0, r: r });
-      }
+    lumGrid = new Float32Array(GRID * GRID);
+    for (var i = 0; i < GRID * GRID; i++) {
+      lumGrid[i] = (0.2126 * data[i * 4] + 0.7152 * data[i * 4 + 1] + 0.0722 * data[i * 4 + 2]) / 255;
+    }
+    buildBackgroundMask();
+    buildParticles();
+    draw();
+
+    window.addEventListener("themechange", function () {
+      refreshInk();
+      buildParticles();
+      draw();
+    });
+    var mq = window.matchMedia("(prefers-color-scheme: dark)");
+    if (mq.addEventListener) {
+      mq.addEventListener("change", function () {
+        refreshInk();
+        buildParticles();
+        draw();
+      });
     }
 
-    draw();
     if (reduceMotion) return; // static art piece, no physics
 
     canvas.addEventListener("pointermove", function (e) {
@@ -87,6 +101,69 @@
       burst(e.clientX - rect.left, e.clientY - rect.top);
       wake();
     });
+  }
+
+  // Flood fill from the image edges: every bright cell connected to the
+  // border is backdrop, not face/shirt.
+  function buildBackgroundMask() {
+    var BG_LUM = 0.8;
+    bgMask = new Uint8Array(GRID * GRID);
+    var queue = [];
+    function seed(idx) {
+      if (!bgMask[idx] && lumGrid[idx] > BG_LUM) {
+        bgMask[idx] = 1;
+        queue.push(idx);
+      }
+    }
+    for (var e = 0; e < GRID; e++) {
+      seed(e); // top row
+      seed((GRID - 1) * GRID + e); // bottom row
+      seed(e * GRID); // left column
+      seed(e * GRID + GRID - 1); // right column
+    }
+    while (queue.length) {
+      var idx = queue.pop();
+      var x = idx % GRID;
+      var y = (idx / GRID) | 0;
+      if (x > 0) seed(idx - 1);
+      if (x < GRID - 1) seed(idx + 1);
+      if (y > 0) seed(idx - GRID);
+      if (y < GRID - 1) seed(idx + GRID);
+    }
+  }
+
+  function buildParticles() {
+    var dark = darkMode();
+    var old = particles;
+    particles = [];
+    var n = 0;
+    for (var gy = 0; gy < GRID; gy++) {
+      for (var gx = 0; gx < GRID; gx++) {
+        var idx = gy * GRID + gx;
+        if (bgMask[idx]) continue;
+        var lum = lumGrid[idx];
+        var r;
+        if (dark) {
+          // Bright areas of the face glow; dark hair stays a faint speckle
+          r = cell * (0.08 + 0.55 * Math.pow(lum, 1.25));
+        } else {
+          if (lum > 0.82) continue; // interior highlights dissolve into paper
+          r = cell * 0.62 * Math.pow(1 - lum, 0.85);
+        }
+        if (r < 0.22) continue;
+        var x = (gx + 0.5) * cell;
+        var y = (gy + 0.5) * cell;
+        // Keep current displacement if this dot existed before the theme flip
+        var prev = old[n];
+        if (prev && prev.hx === x && prev.hy === y) {
+          prev.r = r;
+          particles.push(prev);
+        } else {
+          particles.push({ hx: x, hy: y, x: x, y: y, vx: 0, vy: 0, r: r });
+        }
+        n++;
+      }
+    }
   }
 
   function burst(bx, by) {

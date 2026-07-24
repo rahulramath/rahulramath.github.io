@@ -6,16 +6,28 @@
   --ink-soft: #92897c;
   --underline: rgba(29, 29, 27, 0.35);
   --hairline: rgba(29, 29, 27, 0.08);
-  color-scheme: light dark;
+  color-scheme: light;
+}
+
+/* Dark palette applies when chosen with the toggle, or when the system asks
+   for dark and the visitor hasn't chosen light. */
+:root[data-theme="dark"] {
+  --paper: #161512;
+  --ink: #e9e5dc;
+  --ink-soft: #8d8679;
+  --underline: rgba(233, 229, 220, 0.35);
+  --hairline: rgba(233, 229, 220, 0.1);
+  color-scheme: dark;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     --paper: #161512;
     --ink: #e9e5dc;
     --ink-soft: #8d8679;
     --underline: rgba(233, 229, 220, 0.35);
     --hairline: rgba(233, 229, 220, 0.1);
+    color-scheme: dark;
   }
 }
 
@@ -49,6 +61,29 @@ h1 {
   font-weight: 650;
   letter-spacing: -0.01em;
   margin: 0 0 6px;
+}
+
+/* Light/dark toggle, top right where people expect it */
+.theme-toggle {
+  position: absolute;
+  top: 28px;
+  right: 28px;
+  padding: 8px;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  color: var(--ink-soft);
+  transition: color 0.15s ease;
+}
+
+.theme-toggle:hover {
+  color: var(--ink);
+}
+
+.theme-toggle svg {
+  display: block;
+  width: 18px;
+  height: 18px;
 }
 
 /* Small halftone portrait sitting above the name */

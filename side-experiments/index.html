@@ -5,9 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Side Experiments — Rahul Ramath</title>
     <meta name="description" content="Side experiments by Rahul Ramath." />
-    <link rel="stylesheet" href="../style.css?v=15" />
+    <link rel="stylesheet" href="../style.css?v=16" />
+    <script>
+      try {
+        var t = localStorage.getItem("theme");
+        if (t) document.documentElement.setAttribute("data-theme", t);
+      } catch (e) {}
+    </script>
   </head>
   <body>
+    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode"></button>
     <a class="back" href="../">← rahul ramath</a>
 
     <h1>Side Experiments</h1>
@@ -31,5 +38,7 @@
       <a href="https://rahulramath.github.io/rahuls-brewlab/">Brew Lab</a>
       <span class="desc">Live nutrition label for any Starbucks order and recipe</span>
     </p>
+
+    <script src="../theme.js?v=1" defer></script>
   </body>
 </html>

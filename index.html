@@ -5,9 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Rahul Ramath</title>
     <meta name="description" content="Rahul Ramath — product designer. Side experiments live here." />
-    <link rel="stylesheet" href="style.css?v=15" />
+    <link rel="stylesheet" href="style.css?v=16" />
+    <script>
+      try {
+        var t = localStorage.getItem("theme");
+        if (t) document.documentElement.setAttribute("data-theme", t);
+      } catch (e) {}
+    </script>
   </head>
   <body>
+    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode"></button>
     <canvas id="portrait" role="img" aria-label="Halftone dot portrait of Rahul Ramath"></canvas>
     <h1>Rahul Ramath</h1>
     <p class="tagline">Product designer at <a href="https://www.betterup.com">BetterUp</a>.</p>
@@ -64,6 +71,7 @@
       <li>grew up in India, where I studied computer science at <a href="https://www.unipune.ac.in">University of Pune</a></li>
     </ul>
 
-    <script src="portrait.js?v=4" defer></script>
+    <script src="theme.js?v=1" defer></script>
+    <script src="portrait.js?v=5" defer></script>
   </body>
 </html>
