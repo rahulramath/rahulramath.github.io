@@ -4,6 +4,19 @@
   --paper: #faf7f0;
   --ink: #1d1d1b;
   --ink-soft: #92897c;
+  --underline: rgba(29, 29, 27, 0.35);
+  --hairline: rgba(29, 29, 27, 0.08);
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #161512;
+    --ink: #e9e5dc;
+    --ink-soft: #8d8679;
+    --underline: rgba(233, 229, 220, 0.35);
+    --hairline: rgba(233, 229, 220, 0.1);
+  }
 }
 
 * {
@@ -70,14 +83,14 @@ h1 {
   content: "";
   display: block;
   width: 180px;
-  border-top: 1px solid rgba(29, 29, 27, 0.08);
+  border-top: 1px solid var(--hairline);
   margin-bottom: 14px;
 }
 
 /* Divider between the intro block and history */
 hr.rule {
   border: 0;
-  border-top: 1px solid rgba(29, 29, 27, 0.08);
+  border-top: 1px solid var(--hairline);
   width: 180px;
   margin: 44px 0 12px;
 }
@@ -99,7 +112,7 @@ hr.rule + .section-label {
   font-weight: 650;
   color: var(--ink);
   white-space: nowrap;
-  text-decoration-color: rgba(29, 29, 27, 0.35);
+  text-decoration-color: var(--underline);
   text-underline-offset: 4px;
 }
 
@@ -119,7 +132,7 @@ hr.rule + .section-label {
 a {
   color: var(--ink);
   text-decoration: underline;
-  text-decoration-color: rgba(29, 29, 27, 0.35);
+  text-decoration-color: var(--underline);
   text-underline-offset: 3px;
 }
 

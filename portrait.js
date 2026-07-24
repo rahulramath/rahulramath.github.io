@@ -8,9 +8,23 @@
   if (!canvas || !canvas.getContext) return;
 
   var ctx = canvas.getContext("2d");
-  var INK = "#1d1d1b";
   var GRID = 60; // dots per side
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // Dots take the page's current ink color, so dark mode renders the portrait
+  // as light dots on dark paper (same geometry, inverted print).
+  var ink = "#1d1d1b";
+  function refreshInk() {
+    ink = getComputedStyle(document.body).color || ink;
+  }
+  refreshInk();
+  var darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
+  if (darkQuery.addEventListener) {
+    darkQuery.addEventListener("change", function () {
+      refreshInk();
+      draw();
+    });
+  }
 
   var img = new Image();
   img.src = "portrait.jpg";
@@ -135,7 +149,7 @@
 
   function draw() {
     ctx.clearRect(0, 0, size, size);
-    ctx.fillStyle = INK;
+    ctx.fillStyle = ink;
     for (var i = 0; i < particles.length; i++) {
       var p = particles[i];
       ctx.beginPath();
